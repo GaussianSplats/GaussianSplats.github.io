@@ -3,7 +3,7 @@ window.SEMINAR_CONFIG = {
   owner: 'GaussianSplats',
   repo: 'GaussianSplats.github.io',
   branch: 'main',
-  githubClientId: '',
-  oauthWorkerUrl: '',
+  githubClientId: 'Ov23liWJpsJYEfu13uz3',
+  oauthWorkerUrl: 'https://gaussian-oauth.tarunb1000.workers.dev',
   googleCalendarUrl: ''
 };
