@@ -1,7 +1,7 @@
-// Fill these in after creating the GitHub repository and OAuth Worker; see README.md.
+// Complete GitHub sign-in and optional calendar settings as described in README.md.
 window.SEMINAR_CONFIG = {
-  owner: '',
-  repo: '',
+  owner: 'GaussianSplats',
+  repo: 'GaussianSplats',
   branch: 'main',
   githubClientId: '',
   oauthWorkerUrl: '',
