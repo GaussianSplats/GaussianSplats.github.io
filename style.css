@@ -1,2 +1,87 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
 :root{--ink:#212521;--muted:#747b73;--line:#e4e7df;--accent:#48684f;--cream:#f5f6f1}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fbfcf9;color:var(--ink);font:15px 'DM Sans',Arial,sans-serif}a{color:inherit}button,input,select,textarea{font:inherit}.top{height:84px;max-width:1240px;margin:auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{text-decoration:none;font-weight:700;letter-spacing:-.04em;font-size:17px}.brand span{font-weight:400;color:var(--muted)}nav{display:flex;gap:32px}nav a{font-size:13px;text-decoration:none;color:#5d665e}nav a:hover,.material:hover{color:var(--accent)}main{max-width:1100px;margin:auto;padding:0 40px}.intro{padding:91px 0 83px;border-bottom:1px solid var(--line)}.eyebrow{font-size:10px;font-weight:700;letter-spacing:.17em;color:var(--accent);margin:0 0 15px}.eyebrow span{color:#aab2a6;margin:0 5px}h1,h2{font-family:'DM Serif Display',Georgia,serif;font-weight:400;letter-spacing:-.025em;margin:0}h1{font-size:clamp(48px,7vw,76px);line-height:1.06}.lead{font-size:17px;line-height:1.7;color:#707970;max-width:520px;margin:20px 0 0}.upcoming,.archive{padding:58px 0 14px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}h2{font-size:33px}.status,.count{font-size:10px;letter-spacing:.12em;color:#879087;font-weight:700}.status i{display:inline-block;width:6px;height:6px;background:#789c7a;border-radius:50%;margin-right:6px}.next{background:#eef2e9;border:1px solid #e2e9dd;border-radius:5px;padding:27px 30px;display:flex;gap:35px;align-items:center;min-height:130px}.next-date{min-width:140px;border-right:1px solid #d3dccf;padding-right:28px;font-family:Georgia,serif;font-size:22px}.next-date small{font:12px 'DM Sans',sans-serif;color:#677a69;display:block;margin-top:7px}.next-info{flex:1;line-height:1.7}.next-info strong{font-size:17px}.next-info p{margin:3px 0;color:#6c796c}.actions,.materials{display:flex;gap:12px;flex-wrap:wrap}.button,button.primary{background:#42664d;color:white;border:1px solid #42664d;border-radius:4px;padding:11px 16px;text-decoration:none;font-size:12px;font-weight:700;cursor:pointer}.button.secondary,button.secondary{background:white;color:#42664d;border:1px solid #d3dfd2}.filters{display:flex;gap:10px;margin-bottom:22px}.search{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--line);padding:0 13px;flex:1;border-radius:4px}.search span{font-size:23px;color:#98a199}.search input{border:0;outline:0;width:100%;padding:12px 0}.filters select,select,input,textarea{border:1px solid #dce1d9;background:#fff;border-radius:4px;color:var(--ink);padding:12px}.tablehead,.row{display:grid;grid-template-columns:140px minmax(0,1fr) 230px;gap:20px}.tablehead{font-size:9px;letter-spacing:.15em;color:#919a91;font-weight:700;padding:15px 0;border-bottom:1px solid var(--line)}.row{padding:24px 0;border-bottom:1px solid var(--line);align-items:start}.date{color:#69746a;font-size:13px}.paper{font-weight:700;line-height:1.5}.presenter,.description{color:#808980;font-size:13px;margin-top:5px;line-height:1.5}.material{font-size:12px;color:#48684f;text-decoration:none;white-space:nowrap}.empty{padding:35px 0;color:var(--muted);line-height:1.6}.message{color:#6c796c;line-height:1.6}footer{max-width:1100px;margin:90px auto 0;padding:25px 40px 40px;border-top:1px solid var(--line);color:#98a099;display:flex;justify-content:space-between;font-size:11px}.editor-main{max-width:900px}.editor-heading{padding:65px 0 30px}.editor-heading h1{font-size:48px}.panel{border:1px solid var(--line);background:#fff;border-radius:5px;padding:25px;margin-bottom:20px}.panel h2{font-size:26px;margin-bottom:12px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:700}.field.full{grid-column:1/-1}.field small{font-weight:400;color:#7c857c;line-height:1.5}.field textarea{min-height:90px;resize:vertical}.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.editor-list-item{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);padding:15px 0}.editor-list-item button,button.link{background:none;border:0;color:var(--accent);cursor:pointer;font-weight:700}.notice{background:#f2f5ed;padding:15px;line-height:1.6;color:#596b5b;border-radius:4px}.error{color:#a43b32}.hidden{display:none!important}@media(max-width:700px){.top{height:68px;padding:0 20px}.brand{font-size:14px}.brand span{display:block;font-size:11px}nav{gap:16px}main{padding:0 20px}.intro{padding:60px 0}.lead{font-size:15px}.upcoming,.archive{padding-top:45px}.next{align-items:start;flex-direction:column;gap:15px;padding:22px}.next-date{border:0;padding:0}.filters{flex-wrap:wrap}.search{flex-basis:100%}.filters select{flex:1;min-width:0}.tablehead{display:none}.row{grid-template-columns:1fr;gap:8px;padding:20px 0}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}footer{margin-top:60px;padding:25px 20px 35px;gap:15px}.editor-heading h1{font-size:39px}}
+
+/* Logo */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Homepage illustration */
+.intro.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 38px;
+  padding: 65px 0;
+}
+
+.hero .lead {
+  max-width: 530px;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Authors and expandable abstract */
+.authors {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 5px;
+}
+
+.abstract {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.abstract summary {
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.abstract p {
+  color: #647063;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin: 10px 0 0;
+}
+
+/* About page */
+.about-page {
+  max-width: 780px;
+  padding-top: 75px;
+}
+
+.about-page p:not(.eyebrow) {
+  line-height: 1.8;
+  font-size: 16px;
+  color: #59665c;
+}
+
+@media (max-width: 700px) {
+  .intro.hero {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 40px 0;
+  }
+
+  .site-logo {
+    width: 32px;
+    height: 32px;
+  }
+}

@@ -16,7 +16,27 @@ async function save(){let contents=JSON.stringify(records,null,2)+'\n';let resul
 $('#signin').onclick=()=>{if(!validConfig()){msg('The editor needs repository and GitHub sign-in setup first. See README.md.',true);return}let state=crypto.randomUUID();sessionStorage.setItem('seminar_oauth_state',state);let callback=new URL('editor.html',location.href).href;let p=new URLSearchParams({client_id:cfg.githubClientId,redirect_uri:callback,scope:'public_repo',state});location.href='https://github.com/login/oauth/authorize?'+p};
 $('#calendar').onclick=()=>{try{let d=Object.fromEntries(new FormData(form));if(!d.title||!d.start||!d.end||!d.timezone)throw Error('Enter a title, start, end and time zone first.');let start=toInstant(d.start,d.timezone),end=toInstant(d.end,d.timezone);if(Date.parse(end)<=Date.parse(start))throw Error('End time must be after start time.');let fmt=x=>new Date(x).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');let p=new URLSearchParams({action:'TEMPLATE',text:d.title,dates:fmt(start)+'/'+fmt(end),details:`Presenter: ${d.presenter}\n${d.paper}`,location:d.location});window.open('https://calendar.google.com/calendar/render?'+p,'_blank','noopener,noreferrer')}catch(e){msg(e.message,true)}};
 $('#signout').onclick=()=>{sessionStorage.removeItem('seminar_token');location.href='editor.html'};$('#cancel').onclick=reset;
-$('#editor-list').onclick=e=>{let id=e.target.dataset.edit;if(!id)return;let m=records.find(x=>x.id===id);editing=id;for(let k of ['title','presenter','timezone','location','paper','slides','notes','recording','transcript'])form.elements[k].value=m[k]||'';form.elements.start.value=localValue(m.start,m.timezone);form.elements.end.value=localValue(m.end,m.timezone);$('#form-title').textContent='Edit meeting';$('#delete').classList.remove('hidden');form.scrollIntoView({behavior:'smooth'})};
+$('#editor-list').onclick=e=>{let id=e.target.dataset.edit;if(!id)return;let m=records.find(x=>x.id===id);editing=id;
+
+for (const k of [
+  'title',
+  'presenter',
+  'timezone',
+  'location',
+  'paper',
+  'slides',
+  'recording',
+  'transcript',
+  'authors'
+]) {
+  form.elements[k].value = m[k] || '';
+}
+
+form.elements.abstract.value =
+  m.abstract ?? String(m.notes || '')
+    .replace(/^Abstract\s*\r?\n/i, '');
+
+form.elements[k].value=m[k]||'';form.elements.start.value=localValue(m.start,m.timezone);form.elements.end.value=localValue(m.end,m.timezone);$('#form-title').textContent='Edit meeting';$('#delete').classList.remove('hidden');form.scrollIntoView({behavior:'smooth'})};
 form.onsubmit=async e=>{e.preventDefault();try{let d=Object.fromEntries(new FormData(form));d.start=toInstant(d.start,d.timezone);d.end=toInstant(d.end,d.timezone);if(Date.parse(d.end)<=Date.parse(d.start))throw Error('End time must be after start time.');d.id=editing||crypto.randomUUID();let before=records.slice();records=editing?records.map(m=>m.id===editing?d:m):[...records,d];try{await save()}catch(e){records=before;throw e}reset();msg('Meeting saved. GitHub Pages may take a few minutes to update. To invite people, create the event in Google Calendar.')}catch(e){msg('Could not save: '+e.message,true)}};
 $('#delete').onclick=async()=>{if(!editing||!confirm('Delete this meeting from the public archive?'))return;let before=records.slice();records=records.filter(m=>m.id!==editing);try{await save();reset();msg('Meeting deleted. The site may take a few minutes to update.')}catch(e){records=before;msg('Could not delete: '+e.message,true)}};
 (async()=>{if(Intl.supportedValuesOf)$('#zones').innerHTML=Intl.supportedValuesOf('timeZone').map(z=>`<option value="${esc(z)}">`).join('');reset();const params=new URLSearchParams(location.search);let code=params.get('code'),state=params.get('state');if(code){history.replaceState(null,'',location.pathname);if(!state||state!==sessionStorage.getItem('seminar_oauth_state')){msg('Sign-in could not be verified. Please try again.',true);return}sessionStorage.removeItem('seminar_oauth_state');try{let r=await fetch(cfg.oauthWorkerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:new URL('editor.html',location.href).href})});let j=await r.json();if(!r.ok||!j.access_token)throw Error(j.error||'Sign-in failed');token=j.access_token;sessionStorage.setItem('seminar_token',token)}catch(e){msg('Sign-in failed: '+e.message,true);return}}else if(params.get('error')){history.replaceState(null,'',location.pathname);msg('GitHub sign-in was cancelled.',true);return}if(token)await load();else msg(validConfig()?'Sign in to manage meetings.':'Setup is required before the editor can sign in. See README.md.')})();

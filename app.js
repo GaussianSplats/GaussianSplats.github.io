@@ -2,12 +2,42 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe = s => { try { const u=new URL(s); return ['https:','http:'].includes(u.protocol)?u.href:''; } catch { return ''; } };
 const link = (url,label) => safe(url)?`<a class="material" href="${esc(safe(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`:'';
+const abstractOf = m => String(m.abstract ?? m.notes ?? '')
+  .replace(/^Abstract\s*\r?\n/i, '')
+  .trim();
 const dateLabel = m => new Intl.DateTimeFormat(undefined,{month:'short',day:'numeric',year:'numeric',timeZone:m.timezone}).format(new Date(m.start));
 const timeLabel = m => new Intl.DateTimeFormat(undefined,{hour:'numeric',minute:'2-digit',timeZone:m.timezone,timeZoneName:'short'}).format(new Date(m.start));
 const monthKey = m => { const p = new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',timeZone:m.timezone}).formatToParts(new Date(m.start)); const o=Object.fromEntries(p.map(x=>[x.type,x.value])); return o.year+'-'+o.month; };
 const calendarLink = m => {const fmt=d=>new Date(d).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''); const p=new URLSearchParams({action:'TEMPLATE',text:m.title,dates:fmt(m.start)+'/'+fmt(m.end),details:`Presenter: ${m.presenter}\n${m.paper||''}`,location:m.location||''});return 'https://calendar.google.com/calendar/render?'+p;};
 let meetings=[];
-function render(){const now=Date.now(); const upcoming=meetings.filter(m=>Date.parse(m.end)>now).sort((a,b)=>Date.parse(a.start)-Date.parse(b.start)); const next=upcoming[0]; $('#next').innerHTML=next?`<div class="next-date">${esc(dateLabel(next))}<small>${esc(timeLabel(next))}</small></div><div class="next-info"><strong>${esc(next.title)}</strong><p>Presented by ${esc(next.presenter)}${next.location?' · '+esc(next.location):''}</p>${link(next.paper,'Read paper')}</div><div class="actions"><a class="button" href="${esc(calendarLink(next))}" target="_blank" rel="noopener noreferrer">Add to calendar ↗</a>${link(window.SEMINAR_CONFIG.googleCalendarUrl,'Group calendar')}</div>`:`<div class="message">No upcoming meeting is scheduled yet. Check back soon. ${link(window.SEMINAR_CONFIG.googleCalendarUrl,'View group calendar')}</div>`;
+function render(){const now=Date.now(); const upcoming=meetings.filter(m=>Date.parse(m.end)>now).sort((a,b)=>Date.parse(a.start)-Date.parse(b.start)); const next=upcoming[0]; $('#next').innerHTML=next?`<div class="next-date">${esc(dateLabel(next))}<small>${esc(timeLabel(next))}</small></div><div class="next-info"><strong>${esc(next.title)}</strong><p>Presented by ${esc(next.presenter)}${next.location?' · '+esc(next.location):''}</p>
+
+${next.authors ? `
+  <p class="authors">Authors: ${esc(next.authors)}</p>
+` : ''}
+
+${abstractOf(next) ? `
+  <details class="abstract">
+    <summary>Abstract</summary>
+    <p>${esc(abstractOf(next))}</p>
+  </details>
+` : ''}
+
+${link(next.paper,'Read paper')}</div>
+
+<div class="actions"><a class="button" href="${esc(calendarLink(next))}" target="_blank" rel="noopener noreferrer">Add to calendar ↗</a>${link(window.SEMINAR_CONFIG.googleCalendarUrl,'Group calendar')}</div>`:`<div class="message">No upcoming meeting is scheduled yet. Check back soon. ${link(window.SEMINAR_CONFIG.googleCalendarUrl,'View group calendar')}</div>`;
 const past=meetings.filter(m=>Date.parse(m.end)<=now).sort((a,b)=>Date.parse(b.start)-Date.parse(a.start)); const currentMonth=$('#month').value, currentPresenter=$('#presenter').value; const months=[...new Set(past.map(m=>monthKey(m)))].sort().reverse(); $('#month').innerHTML='<option value="">All months</option>'+months.map(m=>`<option value="${esc(m)}">${esc(new Intl.DateTimeFormat(undefined,{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(m+'-01T12:00:00Z')))}</option>`).join('');$('#month').value=currentMonth; const people=[...new Set(past.map(m=>m.presenter))].sort();$('#presenter').innerHTML='<option value="">All presenters</option>'+people.map(p=>`<option>${esc(p)}</option>`).join('');$('#presenter').value=currentPresenter;
-const q=$('#search').value.toLowerCase().trim(); const filtered=past.filter(m=>(!currentMonth||monthKey(m)===currentMonth)&&(!currentPresenter||m.presenter===currentPresenter)&&[m.title,m.presenter,m.notes].join(' ').toLowerCase().includes(q));$('#count').textContent=`${filtered.length} ${filtered.length===1?'MEETING':'MEETINGS'}`;$('#list').innerHTML=filtered.length?filtered.map(m=>`<article class="row"><div class="date">${esc(dateLabel(m))}</div><div><div class="paper">${esc(m.title)}</div><div class="presenter">${esc(m.presenter)}</div>${m.notes?`<div class="description">${esc(m.notes)}</div>`:''}</div><div class="materials">${link(m.paper,'Paper')}${link(m.slides,'Slides')}${link(m.recording,'Video')}${link(m.transcript,'Transcript')}</div></article>`).join(''):`<p class="empty">${past.length?'No meetings match your filters.':'Past meetings will appear here after they finish.'}</p>`;}
+const q=$('#search').value.toLowerCase().trim(); const filtered=past.filter(m=>(!currentMonth||monthKey(m)===currentMonth)&&(!currentPresenter||m.presenter===currentPresenter)&&[m.title,m.presenter,m.authors,abstractOf(m)].join(' ').toLowerCase().includes(q));$('#count').textContent=`${filtered.length} ${filtered.length===1?'MEETING':'MEETINGS'}`;$('#list').innerHTML=filtered.length?filtered.map(m=>`<article class="row"><div class="date">${esc(dateLabel(m))}</div><div><div class="paper">${esc(m.title)}</div>
+
+<div class="presenter">${esc(m.presenter)}</div>
+${m.authors ? `<div class="authors">Authors: ${esc(m.authors)}</div>` : ''}
+${abstractOf(m) ? `
+  <details class="abstract">
+    <summary>Abstract</summary>
+    <p>${esc(abstractOf(m))}</p>
+  </details>
+` : ''}
+
+
+</div><div class="materials">${link(m.paper,'Paper')}${link(m.slides,'Slides')}${link(m.recording,'Video')}${link(m.transcript,'Transcript')}</div></article>`).join(''):`<p class="empty">${past.length?'No meetings match your filters.':'Past meetings will appear here after they finish.'}</p>`;}
 ['search','month','presenter'].forEach(id=>$('#'+id).addEventListener('input',render));fetch('data/meetings.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{meetings=data;render();setInterval(render,60000)}).catch(()=>{$('#next').textContent='Could not load meetings. Please refresh the page.';$('#list').innerHTML='<p class="error">Could not load the archive.</p>'});
