@@ -1,1 +1,45 @@
-[]
+
+[
+  {
+    "title": "GaussianGPT: Towards Autoregressive 3D Gaussian Scene Generation",
+    "presenter": "Nikhil Souri Yalamati",
+    "timezone": "Europe/Stockholm",
+    "start": "2026-10-19T11:00:00.000Z",
+    "end": "2026-10-19T11:30:00.000Z",
+    "location": "",
+    "paper": "https://nicolasvonluetzow.github.io/GaussianGPT/",
+    "slides": "",
+    "notes": "Abstract\nMost recent advances in 3D generative modeling rely on diffusion or flow-matching formulations. We instead explore a fully autoregressive alternative and introduce GaussianGPT, a transformer-based model that directly generates 3D Gaussians via next-token prediction, thus facilitating full 3D scene generation. We first compress Gaussian primitives into a discrete latent grid using a sparse 3D convolutional autoencoder with vector quantization. The resulting tokens are serialized and modeled using a causal transformer with 3D rotary positional embedding, enabling sequential generation of spatial structure and appearance. Unlike diffusion-based methods that refine scenes holistically, our formulation constructs scenes step-by-step, naturally supporting completion, outpainting, controllable sampling via temperature, and flexible generation horizons. This formulation leverages the compositional inductive biases and scalability of autoregressive modeling while operating on explicit representations compatible with modern neural rendering pipelines, positioning autoregressive transformers as a complementary paradigm for controllable and context-aware 3D generation.",
+    "recording": "",
+    "transcript": "",
+    "id": "a940a9ee-5737-46d4-adde-5bf67a2d8e4c"
+  },
+  {
+    "title": "YoNoSplat: You Only Need One Model for Feedforward 3D Gaussian Splatting",
+    "presenter": "Tarun Boddeda",
+    "timezone": "Europe/Stockholm",
+    "start": "2026-11-02T09:00:00.000Z",
+    "end": "2026-11-02T09:30:00.000Z",
+    "location": "",
+    "paper": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/42f92b78a6695f60db0cd38b54d57a41-Abstract-Conference.html",
+    "slides": "",
+    "notes": "Abstract\nFast and flexible 3D scene reconstruction from unstructured image collections remains a significant challenge. We present YoNoSplat, a feedforward model that reconstructs high-quality 3D Gaussian Splatting representations from an arbitrary number of images. Our model is highly versatile, operating effectively with both posed and unposed, calibrated and uncalibrated inputs. YoNoSplat predicts local Gaussians and camera poses for each view, which are aggregated into a global representation using either predicted or provided poses. To overcome the inherent difficulty of jointly learning 3D Gaussians and camera parameters, we introduce a novel mixing training strategy. This approach mitigates the entanglement between the two tasks by initially using ground-truth poses to aggregate local Gaussians and gradually transitioning to a mix of predicted and ground-truth poses, which prevents both training instability and exposure bias. We further resolve the scale ambiguity problem by a novel pairwise camera-distance normalization scheme and by embedding camera intrinsics into the network. Moreover, YoNoSplat also predicts intrinsic parameters, making it feasible for uncalibrated inputs. YoNoSplat demonstrates exceptional efficiency, reconstructing a scene from 100 views (at 280×518 resolution) in just 2.69 seconds on an NVIDIA GH200 GPU. It achieves state-of-the-art performance on standard benchmarks in both pose-free and pose-dependent settings. Our project page is at https://botaoye.github.io/yonosplat/.",
+    "recording": "",
+    "transcript": "",
+    "id": "3cb50e9a-08d7-42fb-a172-5bbfb418959d"
+  },
+  {
+    "title": "To Be Decided",
+    "presenter": "Marla Sumwith",
+    "timezone": "Europe/Stockholm",
+    "start": "2026-11-16T12:00:00.000Z",
+    "end": "2026-11-16T12:30:00.000Z",
+    "location": "",
+    "paper": "",
+    "slides": "",
+    "notes": "",
+    "recording": "",
+    "transcript": "",
+    "id": "d58670be-c1f0-441d-9ee0-b4229ac7bebd"
+  }
+]
