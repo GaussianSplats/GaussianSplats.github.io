@@ -7,7 +7,7 @@
     "end": "2026-10-19T11:30:00.000Z",
     "location": "",
     "paper": "https://nicolasvonluetzow.github.io/GaussianGPT/",
-    "slides": "https://docs.google.com/presentation/d/1stdYfoGb93IAOHX3VRd0CkZ25zlVa5sVzzMxCcV-iSw/edit?usp=sharing",
+    "slides": "",
     "authors": "Nicolas von Lützow, Barbara Rössle, Katharina Schmid, Matthias Nießner",
     "abstract": "Most recent advances in 3D generative modeling rely on diffusion or flow-matching formulations. We instead explore a fully autoregressive alternative and introduce GaussianGPT, a transformer-based model that directly generates 3D Gaussians via next-token prediction, thus facilitating full 3D scene generation. We first compress Gaussian primitives into a discrete latent grid using a sparse 3D convolutional autoencoder with vector quantization. The resulting tokens are serialized and modeled using a causal transformer with 3D rotary positional embedding, enabling sequential generation of spatial structure and appearance. Unlike diffusion-based methods that refine scenes holistically, our formulation constructs scenes step-by-step, naturally supporting completion, outpainting, controllable sampling via temperature, and flexible generation horizons. This formulation leverages the compositional inductive biases and scalability of autoregressive modeling while operating on explicit representations compatible with modern neural rendering pipelines, positioning autoregressive transformers as a complementary paradigm for controllable and context-aware 3D generation.",
     "recording": "",
