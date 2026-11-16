@@ -30,15 +30,16 @@
     "id": "3cb50e9a-08d7-42fb-a172-5bbfb418959d"
   },
   {
-    "title": "To Be Decided",
+    "title": "ExploreGS: Explorable 3D Scene Reconstruction",
     "presenter": "Marla Sumwith",
     "timezone": "Europe/Stockholm",
     "start": "2026-11-16T12:00:00.000Z",
     "end": "2026-11-16T12:30:00.000Z",
     "location": "",
-    "paper": "",
+    "paper": "https://exploregs.github.io/",
     "slides": "",
-    "notes": "",
+    "authors": "Minsu Kim, Subin Jeon, In Cho, Mijin Yoo, Seon Joo Kim",
+    "abstract": "Recent advances in novel view synthesis (NVS) have enabled real-time rendering with 3D Gaussian Splatting (3DGS). However, existing methods struggle with artifacts and missing regions when rendering from viewpoints that deviate from the training trajectory, limiting seamless scene exploration. To address this, we propose a 3DGS-based pipeline that generates additional training views to enhance reconstruction. We introduce an information-gain-driven virtual camera placement strategy to maximize scene coverage, followed by video diffusion priors to refine rendered results. Fine-tuning 3D Gaussians with these enhanced views significantly improves reconstruction quality. To evaluate our method, we present Wild-Explore, a benchmark designed for challenging scene exploration. Experiments demonstrate that our approach outperforms existing 3DGS-based methods, enabling high-quality, artifact-free rendering from arbitrary viewpoints.",
     "recording": "",
     "transcript": "",
     "id": "d58670be-c1f0-441d-9ee0-b4229ac7bebd"
